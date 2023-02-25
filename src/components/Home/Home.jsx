@@ -12,25 +12,37 @@ const Home = () => {
     const canvas = document.querySelector(".homeCanvas");
     const renderer = new THREE.WebGLRenderer({ canvas });
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({color : 0x00ff00})
+    const moonGeometry = new THREE.SphereGeometry(2, 64 ,  64);
 
-    const mesh = new THREE.Mesh(geometry, material);
+    const moonMaterial = new THREE.MeshStandardMaterial({color : 0xffffff});
+
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+
+    const mesh = new THREE.Mesh(moonGeometry, moonMaterial);
 
     scene.add(mesh);
 
+    scene.add(pointLight);
+
+    pointLight.position.z = 10;
+
+    camera.position.z = 10;
+
     const animate = () => {
       requestAnimationFrame(animate);
+      mesh.rotation.x += 0.01;
       mesh.rotation.y += 0.01;
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.render(scene, camera);
     }
 
-    camera.position.z = 5;
-    mesh.rotation.y = 1;
+    animate();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.render(scene, camera);
+  
+    // mesh.rotation.y = 1;
+
+    // renderer.setSize(window.innerWidth, window.innerHeight);
+    // renderer.render(scene, camera);
 
     
   }, [])
